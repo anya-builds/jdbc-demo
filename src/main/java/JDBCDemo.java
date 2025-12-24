@@ -40,4 +40,10 @@ public class JDBCDemo {
         }
     }
 
+    private static void updateStudent(Connection conn, int id, String name,String email){
+        String sql = "UPDATE student SET name = '" + name + "', email = '" + email + "' WHERE id=" + id;
+        //       UPDATE student SET name = 'Alice', email = 'email@gmail.com'
+//       WHERE id = 10;
+    }
+
 }
