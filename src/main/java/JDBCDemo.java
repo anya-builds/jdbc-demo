@@ -9,7 +9,9 @@ public class JDBCDemo {
         try(Connection conn= DriverManager.getConnection(URL, USER, PASSWORD);){
             System.out.println("Connected to the database!");
 //            insertStudent(conn,"Alice","alice@gmail.com");
+            updateStudent(conn,1,"Bob","alice@gmail.com");
               selectStudents(conn);
+              deleteStudent(conn,1);
 
         }catch (SQLException e){
             e.printStackTrace();
@@ -44,6 +46,20 @@ public class JDBCDemo {
         String sql = "UPDATE student SET name = '" + name + "', email = '" + email + "' WHERE id=" + id;
         //       UPDATE student SET name = 'Alice', email = 'email@gmail.com'
 //       WHERE id = 10;
+        try (Statement stmt = conn.createStatement()){
+            int rows = stmt.executeUpdate(sql);
+            System.out.println("UPDATED: "+ rows);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
-
+    private static  void deleteStudent(Connection conn, int id){
+        String sql= "DELETE FROM student WHERE id= "+id;
+        try(Statement stmt = conn.createStatement()){
+           int rows = stmt.executeUpdate(sql);
+            System.out.println("DELETED: "+rows);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
