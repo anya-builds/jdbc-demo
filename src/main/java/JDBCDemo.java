@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class JDBCDemo {
     private static final String URL = "jdbc:mysql://localhost:3306/demo_db";
@@ -13,7 +14,15 @@ public class JDBCDemo {
         }catch (SQLException e){
             e.printStackTrace();
         }
-
-
     }
+    private static void insertStudent(Connection conn,String name, String email){
+        String sql= "INSERT INTO student (name, email) VALUES ('"+ name + "','" + email + "')";
+        try(Statement stmt = conn.createStatement()){
+            int rows = stmt.executeUpdate(sql);
+            System.out.println("INSERTED: "+ rows);
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
 }
